@@ -74,7 +74,7 @@ def get_ab_values(mag: np.ndarray, M_co: float) -> tuple[float,float]:
 
     return a_value, b_value
 
-def MAXS(mag_values,discrete_counts):
+def MAXC(mag_values,discrete_counts):
     
     
     return mag_values[np.argmax(discrete_counts)]
@@ -180,7 +180,7 @@ def LLS(mag,mag_values):
         
     return 'couldnt'
 
-def draw(mag_values,discrete_counts,cumulative_counts,M_MAXS=0,M_LLS=0,M_GFT=0,a=0,b=0):
+def draw(mag_values,discrete_counts,cumulative_counts,M_MAXC=0,M_LLS=0,M_GFT=0,a=0,b=0):
     fig, ax = plt.subplots()
     
     plt.scatter(mag_values,discrete_counts,marker="^",s=40)
@@ -196,11 +196,11 @@ def draw(mag_values,discrete_counts,cumulative_counts,M_MAXS=0,M_LLS=0,M_GFT=0,a
     plt.scatter(mag_values,cumulative_counts)
 
     # TODO add their xticks
-    plt.plot([M_MAXS,M_MAXS],[-1,10**4],c='green')
+    plt.plot([M_MAXC,M_MAXC],[-1,10**4],c='green')
     plt.plot([M_GFT,M_GFT],[-1,10**4],c='red')
     plt.plot([M_LLS,M_LLS],[-1,10**4],c='blue')
 
-    text = AnchoredText(f"{filename_to_open}\n{choosen_sheetname}\n{M_MAXS=}\n{M_LLS=}\n{M_GFT=}", 
+    text = AnchoredText(f"{filename_to_open}\n{choosen_sheetname}\n{M_MAXC=}\n{M_LLS=}\n{M_GFT=}", 
                     prop=dict(size=11), frameon=True,loc='upper right',
                     )
     text.patch.set_boxstyle("round,pad=0.,rounding_size=0.2")
@@ -286,10 +286,10 @@ if __name__ == "__main__":
             input('Нажмите Enter чтобы выйти')
             quit()
         try:
-            M_MAXS = MAXS(mag_values,discrete_counts)
+            M_MAXC = MAXC(mag_values,discrete_counts)
         except Exception as exc:
-            print('Ошибка во время счёта M_MAXS:',exc)
-            M_MAXS = 0
+            print('Ошибка во время счёта M_MAXC:',exc)
+            M_MAXC = 0
         try:
             M_GFT = Goodness_of_fit(mag,mag_values,discrete_counts,cumulative_counts)
         except Exception as exc:
@@ -302,10 +302,10 @@ if __name__ == "__main__":
             M_LLS = 0
         print('========================')
         print(f'Результат для листа {choosen_sheetname}:')
-        print(f'{M_MAXS=}')
+        print(f'{M_MAXC=}')
         print(f'{M_GFT=}')
         print(f'{M_LLS=}')
         if args:
-            draw(mag_values,discrete_counts,cumulative_counts,M_MAXS,M_LLS,M_GFT)
+            draw(mag_values,discrete_counts,cumulative_counts,M_MAXC,M_LLS,M_GFT)
         print('========================')
         
