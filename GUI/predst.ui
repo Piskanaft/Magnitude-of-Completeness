@@ -81,21 +81,21 @@
         <item>
          <widget class="QPushButton" name="pushButton_6">
           <property name="text">
-           <string>PushButton</string>
+           <string>add_sheets</string>
           </property>
          </widget>
         </item>
        </layout>
       </item>
       <item row="0" column="0">
-       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,10">
+       <layout class="QVBoxLayout" name="verticalLayout_2" stretch="0,0,0,0">
         <property name="spacing">
          <number>7</number>
         </property>
         <item>
          <widget class="QPushButton" name="load_file_button">
           <property name="sizePolicy">
-           <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+           <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>
             <verstretch>0</verstretch>
            </sizepolicy>
@@ -116,7 +116,23 @@
           <property name="text">
            <string>Выбранный каталог: </string>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+          </property>
          </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="label">
+          <property name="text">
+           <string>Доступные листы:</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="sheets_layout"/>
         </item>
        </layout>
       </item>

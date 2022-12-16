@@ -5,21 +5,22 @@ import matplotlib.pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 plt.rcParams["figure.autolayout"] = True
 
-def simple_read(file: str,column: str) -> np.ndarray: #получить чистый список магнитуд из файла
+def simple_read(file: str,sheet_index:int,column: str) -> np.ndarray: #получить чистый список магнитуд из файла
     try:
-        data = pd.read_excel(file)  
+        data = pd.read_excel(file,sheet_name=sheet_index)  
     except Exception as exc:
         print('Ошибка во время чтения файла:',exc)
-        input('Нажмите Enter чтобы выйти')
-        quit()
+        
+        
     # #TODO если не удалось найти ML, то изменить на другое
     try:
+        print('trying to column')
         raw_mag_column = data[column] #всё содержимое колонки
     except KeyError as err:
         print('ERROR:',err)
         print(f'Вероятнее всего, колонка с названием {column} не существует')
-        input('Нажмите Enter чтобы выйти')
-        quit()
+        
+
     numeric_mags = raw_mag_column[pd.to_numeric(raw_mag_column,errors='coerce').notnull()] #те элементы, которые безошибочно переводятся в число
     mag = np.array(numeric_mags,dtype=float)
     return mag
