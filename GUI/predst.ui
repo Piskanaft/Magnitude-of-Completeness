@@ -23,6 +23,13 @@
          <enum>QLayout::SetDefaultConstraint</enum>
         </property>
         <item>
+         <widget class="QPushButton" name="show_graph_button">
+          <property name="text">
+           <string>Рисунок</string>
+          </property>
+         </widget>
+        </item>
+        <item>
          <widget class="QPushButton" name="calculate_all_methods_button">
           <property name="text">
            <string>Посчитать всеми способами</string>
@@ -99,7 +106,7 @@
          </widget>
         </item>
         <item>
-         <widget class="QLabel" name="choosen_catalog_label">
+         <widget class="QLabel" name="chosen_catalog_label">
           <property name="sizePolicy">
            <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
             <horstretch>0</horstretch>

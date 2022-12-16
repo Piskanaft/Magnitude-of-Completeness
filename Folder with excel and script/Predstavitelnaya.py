@@ -200,7 +200,7 @@ def draw(mag_values,discrete_counts,cumulative_counts,M_MAXC=0,M_LLS=0,M_GFT=0,a
     plt.plot([M_GFT,M_GFT],[-1,10**4],c='red')
     plt.plot([M_LLS,M_LLS],[-1,10**4],c='blue')
 
-    text = AnchoredText(f"{filename_to_open}\n{choosen_sheetname}\n{M_MAXC=}\n{M_LLS=}\n{M_GFT=}", 
+    text = AnchoredText(f"{filename_to_open}\n{chosen_sheetname}\n{M_MAXC=}\n{M_LLS=}\n{M_GFT=}", 
                     prop=dict(size=11), frameon=True,loc='upper right',
                     )
     text.patch.set_boxstyle("round,pad=0.,rounding_size=0.2")
@@ -268,8 +268,8 @@ if __name__ == "__main__":
         
 
         try:
-            global choosen_sheetname
-            choosen_sheetname = available_sheets[n_choice-1]
+            global chosen_sheetname
+            chosen_sheetname = available_sheets[n_choice-1]
         except IndexError as err:
             print('ERROR:',err)
             print('Вероятнее всего, неправильно выбран номер листа')
@@ -301,7 +301,7 @@ if __name__ == "__main__":
             print('Ошибка во время счёта M_LLS:',exc)
             M_LLS = 0
         print('========================')
-        print(f'Результат для листа {choosen_sheetname}:')
+        print(f'Результат для листа {chosen_sheetname}:')
         print(f'{M_MAXC=}')
         print(f'{M_GFT=}')
         print(f'{M_LLS=}')
