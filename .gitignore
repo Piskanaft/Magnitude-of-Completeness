@@ -4,8 +4,6 @@ articles/Описание всех методов_Mignan-Woessner-2012-CORSSA-Ma
 articles/01-Smirnov.pdf
 articles/__2022__.pdf
 pros and cons.docx
-1button.ui
-GUI/1button.ui
-GUI/ui_1button.py
-GUI/for1button.py
-ui_1button.py
+
+GUI/__pycache__/Predst_func_forGUI.cpython-310.pyc
+GUI/ui_predst.py
