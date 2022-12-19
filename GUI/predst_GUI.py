@@ -9,12 +9,13 @@ from functools import partial
 
 import Predst_func_forGUI as MC
 
-MyWindow, base_class = uic.loadUiType('./predst.ui')
+MyWindow, base_class = uic.loadUiType('./GUI/predst.ui')
 class MainWindow(base_class):
     def __init__(self, *args,**kwargs):
         super().__init__(*args,**kwargs)
         self.ui = MyWindow()
         self.ui.setupUi(self)
+        self.setWindowTitle('Представительная магнитуда')
         self.show()
 
         self.ui.load_file_button.clicked.connect(self.load_catalog)
@@ -24,11 +25,8 @@ class MainWindow(base_class):
         self.ui.calculate_lls_button.clicked.connect(lambda: self.clicked_methods('lls'))
         self.ui.show_graph_button.clicked.connect(lambda: MC.draw(self.mag_values,self.discrete_counts,self.cumulative_counts))
 
-        
-
-        
     def load_catalog(self):
-        #TODO sheet chosing
+        
         file_path = qtw.QFileDialog.getOpenFileName(self, 'Open File')
         if file_path[0]:
             file_name = os.path.basename(file_path[0])

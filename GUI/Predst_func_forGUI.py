@@ -5,6 +5,7 @@ import matplotlib.pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 plt.rcParams["figure.autolayout"] = True
 
+
 def simple_read(file: str,sheet_index:int,column: str) -> np.ndarray: #получить чистый список магнитуд из файла
     try:
         data = pd.read_excel(file,sheet_name=sheet_index)  
@@ -14,7 +15,7 @@ def simple_read(file: str,sheet_index:int,column: str) -> np.ndarray: #полу�
         
     # #TODO если не удалось найти ML, то изменить на другое
     try:
-        print('trying to column')
+        
         raw_mag_column = data[column] #всё содержимое колонки
     except KeyError as err:
         print('ERROR:',err)
