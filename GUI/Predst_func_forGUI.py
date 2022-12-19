@@ -1,6 +1,7 @@
 import numpy as np
 import pandas as pd
 import math
+from scipy.stats import norm
 import matplotlib.pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 plt.rcParams["figure.autolayout"] = True
@@ -161,6 +162,25 @@ def LLS(mag,mag_values):
         t_list.append(t)
         
     return 'couldnt'
+
+def EMR(mag,mag_values):
+    likelihood_function = np.array([])
+    M_bin = 0.1
+    for M_co in mag_values:
+        mag_to_test_less_M_co = mag[mag<M_co]
+        mag_to_test_more_M_co = mag[mag>=M_co]
+        mu,sigma = norm.fit(mag_to_test_less_M_co)
+        lamb_less_M_co = norm.cdf(mag_values[mag_values<M_co],mu,sigma) 
+        a,b = get_ab_values(mag_to_test_more_M_co,M_co)
+        beta  = b * math.log(10)
+        lamb_more_M_co = np.exp(-beta*(mag_values[mag_values>=M_co]-M_co))
+        lamb = np.append(lamb_less_M_co,lamb_more_M_co)
+        current_likelihood = np.sum(np.log(lamb))
+        likelihood_function = np.append(likelihood_function,current_likelihood)
+    mag_values = mag_values[~np.isnan(likelihood_function)]
+    likelihood_function = likelihood_function[~np.isnan(likelihood_function)]
+        
+    return mag_values[np.argmin(likelihood_function)]
 
 def draw(mag_values,discrete_counts,cumulative_counts,M_MAXC=0,M_LLS=0,M_GFT=0,a=0,b=0):
 
