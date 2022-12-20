@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>753</width>
-    <height>418</height>
+    <width>663</width>
+    <height>435</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -30,6 +30,10 @@
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>icon.png</normaloff>icon.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">/*QLabel {
@@ -105,6 +109,62 @@ font-family: consolas;
            </property>
           </widget>
          </item>
+         <item alignment="Qt::AlignLeft">
+          <widget class="QFrame" name="frame">
+           <property name="frameShape">
+            <enum>QFrame::StyledPanel</enum>
+           </property>
+           <property name="frameShadow">
+            <enum>QFrame::Raised</enum>
+           </property>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <property name="spacing">
+             <number>6</number>
+            </property>
+            <property name="leftMargin">
+             <number>0</number>
+            </property>
+            <property name="rightMargin">
+             <number>0</number>
+            </property>
+            <item>
+             <widget class="QLabel" name="Mag_column_label">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Preferred">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>Столбец магнитуд</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QLineEdit" name="Mag_column_lineedit">
+              <property name="enabled">
+               <bool>true</bool>
+              </property>
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+              <property name="text">
+               <string>ML</string>
+              </property>
+              <property name="maxLength">
+               <number>32762</number>
+              </property>
+              <property name="clearButtonEnabled">
+               <bool>false</bool>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </item>
          <item>
           <widget class="QLabel" name="available_sheets_label">
            <property name="enabled">
@@ -120,8 +180,8 @@ font-family: consolas;
             <font>
              <family>Consolas</family>
              <pointsize>10</pointsize>
-             <weight>75</weight>
-             <bold>true</bold>
+             <weight>50</weight>
+             <bold>false</bold>
             </font>
            </property>
            <property name="text">
@@ -217,6 +277,9 @@ font-family: consolas;
          </item>
          <item>
           <widget class="QCheckBox" name="show_mc_on_graph_checkbox">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="text">
             <string>Показать на рисунке посчитанные Mc</string>
            </property>
@@ -319,7 +382,7 @@ font-family: consolas;
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>753</width>
+     <width>663</width>
      <height>26</height>
     </rect>
    </property>

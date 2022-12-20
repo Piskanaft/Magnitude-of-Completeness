@@ -20,8 +20,7 @@ def simple_read(file: str,sheet_index:int,column: str) -> np.ndarray: #полу�
         
         raw_mag_column = data[column] #всё содержимое колонки
     except KeyError as err:
-        print('ERROR:',err)
-        print(f'Вероятнее всего, колонка с названием {column} не существует')
+        raise Exception
         
 
     numeric_mags = raw_mag_column[pd.to_numeric(raw_mag_column,errors='coerce').notnull()] #те элементы, которые безошибочно переводятся в число
