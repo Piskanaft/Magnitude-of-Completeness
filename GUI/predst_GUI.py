@@ -1,6 +1,4 @@
-
 import sys
-# import sip
 import os.path
 from PyQt5 import QtWidgets as qtw
 from PyQt5 import QtCore as qtc
@@ -8,7 +6,6 @@ from PyQt5 import QtGui as qtg
 from PyQt5 import uic,QtGui
 import pandas as pd
 from functools import partial
-
 import Predst_func_forGUI as MC
 
 MyWindow, base_class = uic.loadUiType('./GUI/predst.ui')
@@ -19,8 +16,8 @@ class MainWindow(base_class):
         self.ui.setupUi(self)
         self.setWindowTitle('Представительная магнитуда')   
         
-
         self.ui.load_file_button.clicked.connect(self.load_catalog)
+
         self.ui.calculate_all_methods_button.clicked.connect(lambda: self.clicked_methods('maxcgftllsemr'))
         self.ui.calculate_maxc_button.clicked.connect(lambda: self.clicked_methods('maxc'))
         self.ui.calculate_gft_button.clicked.connect(lambda: self.clicked_methods('gft'))
@@ -32,20 +29,26 @@ class MainWindow(base_class):
         self.ui.Mag_column_label.hide()
         self.ui.Mag_column_lineedit.hide()
 
-        # self.show()
     def load_catalog(self):
         
+        def drop_to_default():
+            self.ui.chosen_sheet_status.setText('Лист не выбран')
+            self.ui.available_sheets_label.setText('Доступные листы:')
+            for widget in self.ui.RightMenu.findChildren((qtw.QPushButton,qtw.QCheckBox)):
+                widget.setEnabled(False)
+            for label in self.ui.methods_form.findChildren(qtw.QLabel):
+                label.setText('0')
+
         file_path = qtw.QFileDialog.getOpenFileName(self, 'Open File',filter="Excel Catalogs (*.xlsx)")
         if not file_path[0]:
-            print('passing')
             return None
         
         self.filename_to_open = os.path.basename(file_path[0])
         self.ui.chosen_catalog_label.setText('Выбранный каталог: ' + self.filename_to_open)
         self.chosen_catalog_path = file_path[0]
         self.add_available_sheets()
-        self.ui.chosen_sheet_status.setText('Лист не выбран')
-        self.ui.available_sheets_label.setText('Доступные листы:')
+        drop_to_default()
+        
         self.ui.Mag_column_label.show()
         self.ui.Mag_column_lineedit.show()
     
@@ -57,7 +60,6 @@ class MainWindow(base_class):
         #adding sheets
         for sheet in available_sheets:
             self.ui.sheets_layout.addWidget(qtw.QPushButton(str(sheet)))
-        
         #connecting every sheet button
         items = [self.ui.sheets_layout.itemAt(i) for i in range(self.ui.sheets_layout.count())]
         for i,layout_element in enumerate(items):
@@ -73,6 +75,7 @@ class MainWindow(base_class):
         except:
             qtw.QMessageBox.critical(self,'Ошибка',f'Не найден столбец магнитуд {column_name} на листе {sheet_name}')
             return None
+            
         self.chosen_sheet_name = sheet_name
         self.mag_values,self.discrete_counts,self.cumulative_counts = MC.calculate(self.mag)
         for widget in self.ui.RightMenu.findChildren((qtw.QPushButton,qtw.QCheckBox)):
@@ -96,18 +99,14 @@ class MainWindow(base_class):
     
     def clicked_show_graph(self):
         
-        Mc_MAXC = self.ui.calculate_maxc_label.text()
-        Mc_GFT = self.ui.calculate_gft_label.text()
-        Mc_LLS = self.ui.calculate_lls_label.text()
-        Mc_EMR = self.ui.calculate_emr_label.text()
-        lst = [Mc_MAXC,Mc_GFT,Mc_LLS,Mc_EMR]
-        for i,Mc in enumerate(lst):
+        Mc_results = [wid.text() for wid in self.ui.methods_form.findChildren(qtw.QLabel)]
+        for i,Mc in enumerate(Mc_results):
             try:
                 Mc = float(Mc)
             except:
                 Mc=0
-            lst[i] = Mc
-        self.Mc_list = lst
+            Mc_results[i] = Mc
+        self.Mc_list = Mc_results
         MC.draw(self.mag_values,self.discrete_counts,self.cumulative_counts,mw)
         
         
@@ -121,6 +120,10 @@ if __name__ == '__main__':
     QCheckBox {
     font-size: 17px;
     font-family: consolas;  
+        }
+    QPushButton {
+         font-size: 17px;
+    font-family: consolas; 
         }""")
     mw = MainWindow()
     

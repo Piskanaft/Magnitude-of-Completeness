@@ -5,19 +5,15 @@ from scipy.stats import norm
 import matplotlib.pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 plt.rcParams["figure.autolayout"] = True
-# from predst_GUI import MainWindow
-import predst_GUI
+
+
 
 def simple_read(file: str,sheet_index:int,column: str) -> np.ndarray: #получить чистый список магнитуд из файла
     try:
         data = pd.read_excel(file,sheet_name=sheet_index)  
     except Exception as exc:
         print('Ошибка во время чтения файла:',exc)
-        
-        
-    # #TODO если не удалось найти ML, то изменить на другое
     try:
-        
         raw_mag_column = data[column] #всё содержимое колонки
     except KeyError as err:
         raise Exception
@@ -165,7 +161,6 @@ def LLS(mag,mag_values):
 
 def EMR(mag,mag_values):
     likelihood_function = np.array([])
-    M_bin = 0.1
     for M_co in mag_values:
         mag_to_test_less_M_co = mag[mag<M_co]
         mag_to_test_more_M_co = mag[mag>=M_co]
@@ -183,11 +178,10 @@ def EMR(mag,mag_values):
     return mag_values[np.argmin(likelihood_function)]
 
 def draw(mag_values,discrete_counts,cumulative_counts,mw):
-    
     filename_to_open = mw.filename_to_open
     chosen_sheetname = mw.chosen_sheet_name
+
     fig, ax = plt.subplots()
-    # print(predst_GUI.MainWindow.get_info_to_draw(predst_GUI.MainWindow))
     plt.scatter(mag_values,discrete_counts,marker="^",s=40)
     plt.yscale('log')
     plt.xlim(min(mag_values)-0.1,max(mag_values)+0.1)
@@ -212,6 +206,5 @@ def draw(mag_values,discrete_counts,cumulative_counts,mw):
                     )
     text.patch.set_boxstyle("round,pad=0.,rounding_size=0.2")
     ax.add_artist(text)
-    # plt.tight_layout()
     plt.show()
     
