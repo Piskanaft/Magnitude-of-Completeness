@@ -216,6 +216,16 @@ font-family: consolas;
           </widget>
          </item>
          <item>
+          <widget class="QCheckBox" name="show_mc_on_graph_checkbox">
+           <property name="text">
+            <string>Показать на рисунке посчитанные Mc</string>
+           </property>
+           <property name="checked">
+            <bool>true</bool>
+           </property>
+          </widget>
+         </item>
+         <item>
           <widget class="QPushButton" name="calculate_all_methods_button">
            <property name="enabled">
             <bool>false</bool>

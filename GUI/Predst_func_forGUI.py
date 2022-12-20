@@ -5,7 +5,8 @@ from scipy.stats import norm
 import matplotlib.pyplot as plt
 from matplotlib.offsetbox import AnchoredText
 plt.rcParams["figure.autolayout"] = True
-
+# from predst_GUI import MainWindow
+import predst_GUI
 
 def simple_read(file: str,sheet_index:int,column: str) -> np.ndarray: #получить чистый список магнитуд из файла
     try:
@@ -182,30 +183,32 @@ def EMR(mag,mag_values):
         
     return mag_values[np.argmin(likelihood_function)]
 
-def draw(mag_values,discrete_counts,cumulative_counts,M_MAXC=0,M_LLS=0,M_GFT=0,a=0,b=0):
-
-    filename_to_open = 'placceholder'
-    chosen_sheetname = 'placceholder'
-    fig, ax = plt.subplots()
+def draw(mag_values,discrete_counts,cumulative_counts,mw):
     
+    filename_to_open = mw.filename_to_open
+    chosen_sheetname = mw.chosen_sheet_name
+    fig, ax = plt.subplots()
+    # print(predst_GUI.MainWindow.get_info_to_draw(predst_GUI.MainWindow))
     plt.scatter(mag_values,discrete_counts,marker="^",s=40)
     plt.yscale('log')
     plt.xlim(min(mag_values)-0.1,max(mag_values)+0.1)
     plt.ylim(1,max(cumulative_counts)+0.1*max(cumulative_counts))
     plt.grid()
     
-    M = np.arange(0,6,0.1)
-    N = 10**(a-b*M)
-    plt.plot(M,N)
+    # M = np.arange(0,6,0.1)
+    # N = 10**(a-b*M)
+    # plt.plot(M,N)
     
     plt.scatter(mag_values,cumulative_counts)
-
+    Mc_MAXC,Mc_GFT,Mc_LLS,Mc_EMR = mw.Mc_list
     # TODO add their xticks
-    plt.plot([M_MAXC,M_MAXC],[-1,10**4],c='green')
-    plt.plot([M_GFT,M_GFT],[-1,10**4],c='red')
-    plt.plot([M_LLS,M_LLS],[-1,10**4],c='blue')
+    if mw.ui.show_mc_on_graph_checkbox.isChecked():
+        plt.plot([Mc_MAXC,Mc_MAXC],[-1,10**4],c='green')
+        plt.plot([Mc_GFT,Mc_GFT],[-1,10**4],c='red')
+        plt.plot([Mc_LLS,Mc_LLS],[-1,10**4],c='blue')
+        plt.plot([Mc_EMR,Mc_EMR],[-1,10**4],c='magenta')
 
-    text = AnchoredText(f"{filename_to_open}\n{chosen_sheetname}\n{M_MAXC=}\n{M_LLS=}\n{M_GFT=}", 
+    text = AnchoredText(f"{filename_to_open}\n{chosen_sheetname}\n{Mc_MAXC=}\n{Mc_LLS=}\n{Mc_GFT=}\n{Mc_EMR=}", 
                     prop=dict(size=11), frameon=True,loc='upper right',
                     )
     text.patch.set_boxstyle("round,pad=0.,rounding_size=0.2")

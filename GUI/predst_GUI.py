@@ -25,15 +25,15 @@ class MainWindow(base_class):
         self.ui.calculate_lls_button.clicked.connect(lambda: self.clicked_methods('lls'))
         self.ui.calculate_emr_button.clicked.connect(lambda: self.clicked_methods('emr'))
 
-        self.ui.show_graph_button.clicked.connect(lambda: MC.draw(self.mag_values,self.discrete_counts,self.cumulative_counts))
+        self.ui.show_graph_button.clicked.connect(self.clicked_show_graph)
 
         # self.show()
     def load_catalog(self):
         
         file_path = qtw.QFileDialog.getOpenFileName(self, 'Open File',filter="Excel Catalogs (*.xlsx)")
         if file_path[0]:
-            file_name = os.path.basename(file_path[0])
-            self.ui.chosen_catalog_label.setText('Выбранный каталог: ' + file_name)
+            self.filename_to_open = os.path.basename(file_path[0])
+            self.ui.chosen_catalog_label.setText('Выбранный каталог: ' + self.filename_to_open)
             self.chosen_catalog_path = file_path[0]
             self.add_available_sheets()
             self.ui.chosen_sheet_status.setText('Лист не выбран')
@@ -53,6 +53,8 @@ class MainWindow(base_class):
             widget.clicked.connect(partial(self.clicked_chosen_sheet, i,sheet_name))
         
     def clicked_chosen_sheet(self,index,sheet_name):
+        self.chosen_sheet_name = sheet_name
+        print('set',self.chosen_sheet_name)
         self.mag = MC.simple_read(self.chosen_catalog_path,index, 'ML')
         self.mag_values,self.discrete_counts,self.cumulative_counts = MC.calculate(self.mag)
         for widget in self.ui.RightMenu.findChildren(qtw.QPushButton):
@@ -73,15 +75,39 @@ class MainWindow(base_class):
         if 'emr' in method:
             M_EMR = MC.EMR(self.mag,self.mag_values)
             self.ui.calculate_emr_label.setText(str(M_EMR))
+    
+    def clicked_show_graph(self):
         
+        Mc_MAXC = self.ui.calculate_maxc_label.text()
+        Mc_GFT = self.ui.calculate_gft_label.text()
+        Mc_LLS = self.ui.calculate_lls_label.text()
+        Mc_EMR = self.ui.calculate_emr_label.text()
+        lst = [Mc_MAXC,Mc_GFT,Mc_LLS,Mc_EMR]
+        for i,Mc in enumerate(lst):
+            try:
+                Mc = float(Mc)
+            except:
+                Mc=0
+            lst[i] = Mc
+        self.Mc_list = lst
+        MC.draw(self.mag_values,self.discrete_counts,self.cumulative_counts,mw)
+        
+        
+        
+
 
 
 if __name__ == '__main__':
     app = qtw.QApplication(sys.argv)
-    app.setStyleSheet("""QLabel {
-font-size: 20px;
-font-family: consolas;
-}""")
+    app.setStyleSheet("""
+    QLabel {
+    font-size: 20px;
+    font-family: consolas;
+    }
+    QCheckBox {
+    font-size: 17px;
+    font-family: consolas;  
+        }""")
     mw = MainWindow()
     mw.show()
     sys.exit(app.exec_())
