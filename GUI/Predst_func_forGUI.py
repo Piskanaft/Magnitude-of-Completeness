@@ -187,6 +187,9 @@ def draw(mag_values,discrete_counts,cumulative_counts,mw):
     plt.xlim(min(mag_values)-0.1,max(mag_values)+0.1)
     plt.ylim(1,max(cumulative_counts)+0.1*max(cumulative_counts))
     plt.grid()
+    ax.tick_params(axis='both', which='major', labelsize=14)
+    plt.xlabel('ML',size = 15)
+    plt.ylabel('N',size = 15)
     
     # M = np.arange(0,6,0.1)
     # N = 10**(a-b*M)
