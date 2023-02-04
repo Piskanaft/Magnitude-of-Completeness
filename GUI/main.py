@@ -6,7 +6,7 @@ from PyQt5 import QtGui as qtg
 from PyQt5 import uic,QtGui
 import pandas as pd
 from functools import partial
-import Predst_func_forGUI as MC
+import MagCom_functions as MC
 
 MyWindow, base_class = uic.loadUiType('./GUI/predst.ui')
 class MainWindow(base_class):
