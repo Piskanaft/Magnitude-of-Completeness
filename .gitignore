@@ -1,8 +1,4 @@
-articles/Assessing_the_Quality_of_Earthquake_Catalogues_Est.pdf
-articles/Учебник_Физика переходных режимов..._блок_интерактивный.pdf
-articles/Описание всех методов_Mignan-Woessner-2012-CORSSA-Magnitude-of-completeness.pdf
-articles/01-Smirnov.pdf
-articles/__2022__.pdf
+
 pros and cons.docx
 
 GUI/__pycache__/Predst_func_forGUI.cpython-310.pyc
@@ -12,3 +8,4 @@ Notebook to implement new functions.ipynb
 /Folder with excel and script
 /test.py
 /Predst before 13.12.ipynb
+/articles
