@@ -8,7 +8,7 @@ import pandas as pd
 from functools import partial
 import MagCom_functions as MC
 
-MyWindow, base_class = uic.loadUiType('./GUI/predst.ui')
+MyWindow, base_class = uic.loadUiType('./predst.ui')
 class MainWindow(base_class):
     def __init__(self, *args,**kwargs):
         super().__init__(*args,**kwargs)
